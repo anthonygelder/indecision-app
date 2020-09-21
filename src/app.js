@@ -1,36 +1,58 @@
-console.log('app')
-
 
 let app = {
     title: 'Title',
     subtitle: 'Great title',
-    options: ['One', 'Two']
+    options: []
 }
 
-let template = (
+const onFormSubmit = (e) => {
+    e.preventDefault()
+    console.log(app.options)
+    const option = e.target.elements.option.value
+
+    if(option) {
+        app.options.push(option)
+        e.target.elements.option.value = ''
+        renderApp()
+    }
+}
+
+const wipe = () => {
+    app.options = []
+    renderApp()
+}
+
+let appRoot = document.getElementById('app')
+
+const number = [55, 101, 1000]
+
+
+const renderApp = () => {
+    let template = (
         <div>
             <h1>{app.title}</h1>
             {app.subtitle && <p>{app.subtitle}</p>}
             <p>{app.options.length > 0 ? "Here are your options." : "No Options"}</p>
+            <p>{app.options.length}</p>
+            <button onClick={wipe}>Remove all options</button>
+
+
+            <ol>
+            {
+                app.options.map((opt) => {
+                    return <li key={opt}>{opt}</li>
+                })
+            }
+            </ol>
+
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option"/>
+                <button>Add</button>
+            </form>
         </div>
 )
-
-let user = {
-    name: 'Anthony',
-    age: 19,
-    location: ''
+    
+    ReactDOM.render(template, appRoot)
 }
 
-let template2 = (
-    <div>
-        <h1>{user.name}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        <p>Location: {user.location ? user.location : 'Place'}</p>
-
-    </div>
-)
-
-
-let appRoot = document.getElementById('app')
-
-ReactDOM.render(template, appRoot)
+renderApp()

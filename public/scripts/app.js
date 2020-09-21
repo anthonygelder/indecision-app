@@ -1,61 +1,85 @@
 'use strict';
 
-console.log('app');
-
 var app = {
     title: 'Title',
     subtitle: 'Great title',
-    options: ['One', 'Two']
+    options: []
 };
 
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        app.title
-    ),
-    app.subtitle && React.createElement(
-        'p',
-        null,
-        app.subtitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        app.options.length > 0 ? "Here are your options." : "No Options"
-    )
-);
+var onFormSubmit = function onFormSubmit(e) {
+    e.preventDefault();
+    console.log(app.options);
+    var option = e.target.elements.option.value;
 
-var user = {
-    name: 'Anthony',
-    age: 19,
-    location: ''
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderApp();
+    }
 };
 
-var template2 = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        user.name
-    ),
-    user.age && user.age >= 18 && React.createElement(
-        'p',
-        null,
-        'Age: ',
-        user.age
-    ),
-    React.createElement(
-        'p',
-        null,
-        'Location: ',
-        user.location ? user.location : 'Place'
-    )
-);
+var wipe = function wipe() {
+    app.options = [];
+    renderApp();
+};
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(template, appRoot);
+var number = [55, 101, 1000];
+
+var renderApp = function renderApp() {
+    var template = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            app.title
+        ),
+        app.subtitle && React.createElement(
+            'p',
+            null,
+            app.subtitle
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options.length > 0 ? "Here are your options." : "No Options"
+        ),
+        React.createElement(
+            'p',
+            null,
+            app.options.length
+        ),
+        React.createElement(
+            'button',
+            { onClick: wipe },
+            'Remove all options'
+        ),
+        React.createElement(
+            'ol',
+            null,
+            app.options.map(function (opt) {
+                return React.createElement(
+                    'li',
+                    { key: opt },
+                    opt
+                );
+            })
+        ),
+        React.createElement(
+            'form',
+            { onSubmit: onFormSubmit },
+            React.createElement('input', { type: 'text', name: 'option' }),
+            React.createElement(
+                'button',
+                null,
+                'Add'
+            )
+        )
+    );
+
+    ReactDOM.render(template, appRoot);
+};
+
+renderApp();
