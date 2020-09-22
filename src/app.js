@@ -1,4 +1,3 @@
-
 let app = {
     title: 'Title',
     subtitle: 'Great title',
@@ -22,9 +21,14 @@ const wipe = () => {
     renderApp()
 }
 
-let appRoot = document.getElementById('app')
+const onMakeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length)
+    const option = app.options[randomNum]
+    alert(option)
+}
 
-const number = [55, 101, 1000]
+
+let appRoot = document.getElementById('app')
 
 
 const renderApp = () => {
@@ -33,7 +37,7 @@ const renderApp = () => {
             <h1>{app.title}</h1>
             {app.subtitle && <p>{app.subtitle}</p>}
             <p>{app.options.length > 0 ? "Here are your options." : "No Options"}</p>
-            <p>{app.options.length}</p>
+            <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
             <button onClick={wipe}>Remove all options</button>
 
 
@@ -50,7 +54,7 @@ const renderApp = () => {
                 <button>Add</button>
             </form>
         </div>
-)
+    )
     
     ReactDOM.render(template, appRoot)
 }
