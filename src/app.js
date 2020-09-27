@@ -1,10 +1,13 @@
 class App extends React.Component {
     render() {
+        const title = 'mytitle'
+
+        const options = ['thing one', 'thing two', 'thing three', 'hello']
         return (
             <div>
-                <Header />
+                <Header title={title}/>
                 <Action />
-                <Options />
+                <Options options={options}/>
                 <AddOption />
             </div>
         )
@@ -16,6 +19,7 @@ class Header extends React.Component {
         return (
             <div>
                 <h1>Indecion</h1>
+                <h1>{this.props.title}</h1>
                 <h2>Put your life in the hands of a computer</h2>
             </div>
         )
@@ -23,22 +27,28 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
-
+    handlePick() {
+        console.log('hello')
+    }
     render() {
         return (
             <div>
-                <button>What should I do?</button>
+                <button onClick={this.handlePick}>What should I do?</button>
             </div>
         )
     }
 }
 
 class Options extends React.Component {
+    handleRemoveAll() {
+        console.log('remove')
+    }
     render() {
         return (
             <div>
+                {this.props.options.map((option) => <Option key={option} optionText={option}/>)}
                 <p>Options Component</p>
-                <Option />
+                <button onClick={this.handleRemoveAll}>Remove all</button>
             </div>
         )
     }
@@ -47,15 +57,28 @@ class Options extends React.Component {
 class Option extends React.Component {
     render() {
         return (
-            <p>Option</p>
+            <p>{this.props.optionText}</p>
         )
     }
 }
 
 class AddOption extends React.Component {
+    handleAddOption(e) {
+        e.preventDefault()
+
+        const option = e.target.option.value
+
+    if(option) {
+        e.target.elements.option.value = ''
+        console.log(option)
+    }
+    }    
     render() {
         return (
-            <p>AddOption component here</p>
+            <form onSubmit={this.handleAddOption}>  
+                <input type='text' name="option"></input>
+                <button>Add option</button>
+            </form>
         )
     }
 }
