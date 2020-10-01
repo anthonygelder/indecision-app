@@ -17,7 +17,7 @@ var App = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            options: props.options
+            options: []
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
@@ -109,10 +109,6 @@ var App = function (_React$Component) {
 
     return App;
 }(React.Component);
-
-App.defaultProps = {
-    options: []
-};
 
 var Header = function Header(props) {
     return React.createElement(

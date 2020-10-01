@@ -2,7 +2,7 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            options: props.options
+            options: []
         }
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
         this.handleDeleteOption = this.handleDeleteOption.bind(this)
@@ -68,10 +68,6 @@ class App extends React.Component {
             </div>
         )
     }
-}
-
-App.defaultProps = {
-    options: []
 }
 
 const Header = (props) => {
